@@ -3,9 +3,11 @@ from torch.utils.data import DataLoader
 from dataset import SimpleObjectDetectionDataset
 from model import DetectionModel
 
-dataset = SimpleObjectDetectionDataset("/Users/amalahmadinurov/Downloads/datasets")
+train_dataset = SimpleObjectDetectionDataset("simple-object-detection-dataset/train")
 
-dataloader = DataLoader(dataset, batch_size=1)
+train_dataloader = DataLoader(train_dataset, batch_size=10)
 
 model = DetectionModel()
-model.train(dataloader)
+model.fit(train_dataloader)
+
+torch.save(model.state_dict(), "./model")
