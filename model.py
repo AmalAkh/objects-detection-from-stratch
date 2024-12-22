@@ -29,7 +29,7 @@ class DetectionModel(nn.Module):
         self.eval()
         for batch in iter(dataloader):
             
-            print(batch[0])
+           
             x = batch[0].to("cpu")
             y = batch[1].to("cpu")
             predictions = self.forward(x)
@@ -48,7 +48,7 @@ class DetectionModel(nn.Module):
             epochs_loss = 0
             for batch in iter(dataloader):
                 
-                print(batch[0])
+               
                 x = batch[0].to("cpu")
                 y = batch[1].to("cpu")
                 predictions = self.forward(x)

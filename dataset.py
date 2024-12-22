@@ -11,7 +11,7 @@ class SimpleObjectDetectionDataset(Dataset):
         self.annotations = []
 
         for image_filename in os.listdir(os.path.join(path, "images")):
-            print(os.path.join(path, "images", image_filename))
+            
             if image_filename == ".DS_Store":
                 continue
             image = Resize((224,224))(read_image(os.path.join(path, "images", image_filename)))
@@ -36,6 +36,7 @@ class SimpleObjectDetectionDataset(Dataset):
 
                 list_with_single_boxes = torch.Tensor([xmin, ymin, xmax, ymax]).float()/224
                 self.annotations.append(list_with_single_boxes)
+        print(f"Loaded {len(self.images)} files")
 
         
     def __len__(self):
