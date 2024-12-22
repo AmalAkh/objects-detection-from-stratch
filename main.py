@@ -13,10 +13,10 @@ test_dataloader = DataLoader(test_dataset, batch_size=1)
 
 
 model = DetectionModel()
-model.fit(train_dataloader, epochs=50)
-
+model.fit(train_dataloader, epochs=40)
+torch.save(model.state_dict(), "./model2")
 model.evaluate(test_dataloader)
 
-torch.save(model.state_dict(), "./model2")
+
 
 

@@ -20,17 +20,18 @@ image = Resize((224,224))(read_image(img_path))
 image = image.float()/255
 model_input = torch.stack([image])
 
-result = model.forward(model_input)
+result, class_result = model.forward(model_input)
+class_result = class_result.int()
 result = torch.reshape(result*224, (4,4,4)).int()
 print(result)
 
 
-
+print(class_result)
 img = cv2.imread(img_path)
 
-
-for block in result.numpy():
-    for box in block:
+np_res = result.numpy()
+for i in range(0, len(np_res)):
+    for box in np_res[i]:
         img = cv2.rectangle(img, box, (0, 255, 0), 2)
 
 

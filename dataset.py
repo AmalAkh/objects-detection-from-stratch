@@ -43,10 +43,15 @@ class SimpleObjectDetectionDataset(Dataset):
 
                 coords = torch.zeros(4,4,4)
                 coords[row][column] = torch.Tensor([xmin, ymin, xmax, ymax])
+                print(coords[row][column])
                 coords = coords.float()
                 coords[row][column]/=224
-                print(coords[row][column])
-                self.annotations.append(torch.flatten(coords))
+              
+
+                existance = torch.zeros(4,4,1)
+                existance[row][column] = 1
+                
+                self.annotations.append((torch.flatten(coords), torch.flatten(existance)))
         print(f"Loaded {len(self.images)} files")
 
         
