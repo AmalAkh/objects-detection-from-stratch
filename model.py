@@ -13,9 +13,12 @@ class DetectionModel(nn.Module):
 
         self.classifier = nn.Sequential(
             nn.Flatten(),
-            nn.Linear(7*7*512,128),
+            nn.Linear(7*7*512,256),
+            nn.Dropout(0.15),
             nn.ReLU(),
-            nn.Linear(128, 4),  
+            nn.Linear(256,128),
+            nn.ReLU(),
+            nn.Linear(128, 4*4*4),  
             nn.Sigmoid()
         )
 

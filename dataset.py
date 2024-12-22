@@ -2,6 +2,7 @@ from torchvision.io import decode_image, read_image
 from torchvision.transforms import Resize
 from torch.utils.data import Dataset
 import torch
+import math
 import xml.etree.ElementTree as ET
 import os
 class SimpleObjectDetectionDataset(Dataset):
@@ -34,8 +35,18 @@ class SimpleObjectDetectionDataset(Dataset):
                 ymax = int(boxes.find("bndbox/ymax").text)
                 xmax = int(boxes.find("bndbox/xmax").text)
 
-                list_with_single_boxes = torch.Tensor([xmin, ymin, xmax, ymax]).float()/224
-                self.annotations.append(list_with_single_boxes)
+                center_x = int((xmax+xmin)/2)
+                center_y = int((ymax+ymin)/2)
+                
+                row = int(math.floor(center_x/112))
+                column = int(math.floor(center_y/112))
+
+                coords = torch.zeros(4,4,4)
+                coords[row][column] = torch.Tensor([xmin, ymin, xmax, ymax])
+                coords = coords.float()
+                coords[row][column]/=224
+                print(coords[row][column])
+                self.annotations.append(torch.flatten(coords))
         print(f"Loaded {len(self.images)} files")
 
         
